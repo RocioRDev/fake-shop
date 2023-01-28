@@ -1,8 +1,7 @@
 <template>
   <div class="home">
-    <h1>PAGINA TO WAPA DE PRODUCTOS</h1>
-    <Edit />
-    <Products />
+    <h1>PAGINA TO WAPA DE PERFIL, NO DE LAO</h1>
+    <UserProfile />
   </div>
 </template>
 

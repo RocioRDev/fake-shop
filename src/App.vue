@@ -1,8 +1,13 @@
 <template>
   <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link to="/login">Login</router-link>
+    <div class="Logo">
+      <el-icon :size="30">
+        <Goods />
+      </el-icon>
+      <div>FAKE SHOP</div>
+    </div>
+    <router-link to="/login">Login</router-link> |
+    <router-link to="/products">Productos</router-link>
   </nav>
   <router-view />
 </template>
@@ -27,5 +32,15 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+
+/* Logo de la tienda siempre visible y a la izquierda */
+nav .Logo {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 30px;
 }
 </style>
