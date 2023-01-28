@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div>
     <el-card class="user-profile">
       <el-row>
@@ -52,4 +52,4 @@ export default {
 .user-info {
   text-align: left;
 }
-</style>
+</style> -->
