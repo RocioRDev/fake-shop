@@ -7,7 +7,8 @@
       <div>FAKE SHOP</div>
     </div>
     <router-link to="/login">Login</router-link> |
-    <router-link to="/products">Productos</router-link>
+    <router-link to="/products">Productos</router-link> |
+    <router-link to="/profile">Perfil</router-link>
   </nav>
   <router-view />
 </template>
