@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div>
     <el-card class="user-profile">
       <el-row>
@@ -38,7 +38,6 @@ export default {
 }
 
 .user-info {
-  margin-left: 20px;
   display: inline-block;
   vertical-align: top;
 }
@@ -53,4 +52,4 @@ export default {
 .user-info {
   text-align: left;
 }
-</style>
+</style> -->
