@@ -17,7 +17,7 @@
         </div>
       </el-menu-item>
       <div class="flex-grow" />
-      <el-menu-item index="1">
+      <!-- <el-menu-item index="1">
         <router-link v-if="!isAuthenticated" to="/login">Login</router-link>
       </el-menu-item>
       <el-menu-item index="2">
@@ -28,9 +28,27 @@
       <el-menu-item index="3">
         <router-link v-if="isAuthenticated" to="/profile">Perfil</router-link>
       </el-menu-item>
-      <el-menu-item index="4">
-        <!-- boton de logout que borra el token -->
+      <el-menu-item index="4">        
         <el-button type="text" class="logout-button" @click="logOut"
+          >Logout</el-button
+        >
+      </el-menu-item> -->
+      <el-menu-item
+        v-for="link in links"
+        :key="link.name"
+        :index="link.name"
+        @click="handleSelect"
+      >
+        <router-link v-if="link.condition" :to="link.path">{{
+          link.name
+        }}</router-link>
+      </el-menu-item>
+      <el-menu-item index="4">
+        <el-button
+          v-if="isAuthenticated"
+          type="text"
+          class="logout-button"
+          @click="logOut"
           >Logout</el-button
         >
       </el-menu-item>
@@ -42,17 +60,47 @@
 <script lang="ts">
 import { ref } from "vue";
 import router from "@/router";
+import { NavBar } from "./components/NavBar.vue";
 
-const activeIndex = ref("1");
-const handleSelect = (key: string, keyPath: string[]) => {
+let handleSelect = (key: string, keyPath: string[]) => {
   console.log(key, keyPath);
 };
-var isAuthenticated = true;
+var isAuthenticated = localStorage.getItem("token") !== null;
+console.log(isAuthenticated);
+var links = [
+  { name: "Login", path: "/login", condition: !isAuthenticated },
+  { name: "Productos", path: "/products", condition: isAuthenticated },
+  { name: "Perfil", path: "/profile", condition: isAuthenticated },
+];
+console.log(links);
 
 export default {
+  name: "AppComponent",
+  components: {
+    NavBar
+  },
   data() {
     return {
       isAuthenticated: localStorage.getItem("token") !== null,
+      links: isAuthenticated
+        ? [
+            { name: "Login", path: "/login", condition: !isAuthenticated },
+            {
+              name: "Productos",
+              path: "/products",
+              condition: isAuthenticated,
+            },
+            { name: "Perfil", path: "/profile", condition: isAuthenticated },
+          ]
+        : [
+            { name: "Login", path: "/login", condition: !isAuthenticated },
+            {
+              name: "Productos",
+              path: "/products",
+              condition: isAuthenticated,
+            },
+            { name: "Perfil", path: "/profile", condition: isAuthenticated },
+          ],
     };
   },
   // Comprobar si el usuario está autenticado
@@ -65,7 +113,22 @@ export default {
     logOut() {
       localStorage.removeItem("token");
       isAuthenticated = false;
+      this.refreshNavbar();
       router.push("/login");
+    },
+    refreshNavbar() {
+      console.log("refreshNavbar");
+      links = isAuthenticated
+        ? [
+            {
+              name: "Productos",
+              path: "/products",
+              condition: isAuthenticated,
+            },
+            { name: "Perfil", path: "/profile", condition: isAuthenticated },
+          ]
+        : [{ name: "Login", path: "/login", condition: isAuthenticated }];
+      console.log(links);
     },
   },
 };
