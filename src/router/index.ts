@@ -12,6 +12,13 @@ const routes: Array<RouteRecordRaw> = [
     name: "login",
     component: () =>
       import(/* webpackChunkName: "login" */ "../views/LoginView.vue"),
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem("token")) {
+        next("/products");
+      } else {
+        next();
+      }
+    },
   },
   {
     path: "/products",
@@ -26,18 +33,19 @@ const routes: Array<RouteRecordRaw> = [
       }
     },
   },
-  // {
-  //   path: "/profile",
-  //   name: "profile",
-  //   component: () =>
-  //     import(/* webpackChunkName: "profile" */ "../views/UserProfileView.vue"),
-  //   beforeEnter: (to, from, next) => {
-  //     if (localStorage.getItem("token")) {
-  //       next();
-  //     } else {
-  //       next("/login");
-  //     }
-  // },
+  {
+    path: "/profile",
+    name: "profile",
+    component: () =>
+      import(/* webpackChunkName: "profile" */ "../views/UserProfileView.vue"),
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem("token")) {
+        next();
+      } else {
+        next("/login");
+      }
+    },
+  },
 ];
 
 const router = createRouter({
