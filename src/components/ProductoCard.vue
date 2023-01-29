@@ -5,6 +5,7 @@
       <h3>{{ product.title }}</h3>
       <p>{{ product.description }}</p>
       <p>Precio: {{ product.price }}</p>
+      <el-button type="primary">Más info</el-button>
     </div>
   </el-card>
 </template>
@@ -25,8 +26,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.card-body {
-  padding: 20px;
+.el-card {
+  margin: 20px;
+  width: 300px;
 }
 
 img {
