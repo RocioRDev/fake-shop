@@ -2,18 +2,13 @@
   <div class="home">
     <h1>PAGINA TO WAPA DE PRODUCTOS</h1>
     <Edit />
-    <Products />
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import LoginForm from "@/components/LoginForm.vue"; // @ is an alias to /src
 
-@Options({
-  components: {
-    LoginForm,
-  },
-})
-export default class ProductsView extends Vue {}
+export default {
+  name: "ProductsView",
+};
 </script>

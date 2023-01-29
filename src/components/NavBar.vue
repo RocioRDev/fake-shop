@@ -166,6 +166,7 @@ a:visited {
 }
 
 .flex-grow {
+  min-width: 50px;
   flex-grow: 1;
 }
 

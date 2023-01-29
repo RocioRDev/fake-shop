@@ -7,11 +7,13 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import LoginForm from "@/components/LoginForm.vue"; // @ is an alias to /src
+import router from "@/router";
+import axios from "axios";
 
-@Options({
+export default {
+  name: "LoginView",
   components: {
     LoginForm,
   },
-})
-export default class LoginView extends Vue {}
+};
 </script>

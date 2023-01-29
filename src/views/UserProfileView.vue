@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <div>
     <user-profile :user="userData" />
   </div>
@@ -46,4 +46,4 @@ export default {
     },
   },
 };
-</script> -->
+</script>
