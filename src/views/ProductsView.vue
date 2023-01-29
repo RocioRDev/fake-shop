@@ -2,7 +2,7 @@
   <div class="common-layout">
     <el-container>
       <el-header>
-        <h1>PAGINA TO WAPA DE PRODUCTOS</h1>
+        <h1>PAGINA DE PRODUCTOS</h1>
         <div class="searchBar">
           <!-- Barra de busqueda que devuelve lo que se ha escrito en ella -->
           <SearchBar
