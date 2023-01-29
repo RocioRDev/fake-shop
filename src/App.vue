@@ -1,30 +1,82 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
+  <!-- Pasarle por props componente NavBar los links creados -->
+  <NavBar
+    :title="title"
+    :links="links"
+    :isAuthenticated="isAuthenticated"
+    @onClick="logOut()"
+    :componentKey="componentKey"
+  />
   <router-view />
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import router from "@/router";
+import NavBar from "./components/NavBar.vue";
 
-nav {
-  padding: 30px;
-}
+var title = "FAKE SHOP";
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+let handleSelect = (key: string, keyPath: string[]) => {
+  console.log(key, keyPath);
+};
+var isAuthenticated = localStorage.getItem("token") !== null;
+console.log(isAuthenticated);
+var links = Array<{
+  name: string;
+  path: string;
+  index: string;
+}>();
+var componentKey = 0;
 
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+export default {
+  name: "AppComponent",
+  components: {
+    NavBar,
+  },
+  setup() {
+    return {
+      logOut: () => {
+        localStorage.removeItem("token");
+        isAuthenticated = localStorage.getItem("token") !== null;
+        console.log("Funcion llamada: " + isAuthenticated + " " + componentKey);
+        componentKey += 1;
+        router.push("/login");
+        window.location.reload();
+      },
+    };
+  },
+  data() {
+    return {
+      title: title,
+      componentKey: componentKey,
+      isAuthenticated: localStorage.getItem("token") !== null,
+      links: isAuthenticated
+        ? [
+            {
+              name: "Productos",
+              path: "/products",
+              index: "1",
+            },
+            {
+              name: "Perfil",
+              path: "/profile",
+              index: "2",
+            },
+          ]
+        : [
+            {
+              name: "Login",
+              path: "/login",
+              index: "1",
+            },
+          ],
+    };
+  },
+  // Comprobar si el usuario está autenticado
+  // y asignar el valor a la variable isAuthenticated
+  mounted() {
+    isAuthenticated = localStorage.getItem("token") !== null;
+    console.log(isAuthenticated);
+  },
+};
+</script>
