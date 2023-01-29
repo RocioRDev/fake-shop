@@ -6,15 +6,19 @@
       placeholder="Ingrese su búsqueda"
       type="text"
       suffix-icon="el-icon-search"
-      @keyup.enter="submitSearch"
+      @keyup.enter="$emit('clickedButton', input)"
     />
-    <el-button type="primary" @click="submitSearch">Buscar</el-button>
+    <el-button type="primary" @click="$emit('clickedButton', input)"
+      >Buscar</el-button
+    >
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, ref } from "vue";
 import { ElInput, ElButton } from "element-plus";
+import { Product } from "@/interfaces/producto";
+import axios from "axios";
 
 export default defineComponent({
   name: "SearchBar",
@@ -22,16 +26,12 @@ export default defineComponent({
     ElInput,
     ElButton,
   },
-  data() {
+  setup() {
+    const input = ref("");
+
     return {
-      input: "",
+      input,
     };
-  },
-  methods: {
-    submitSearch() {
-      console.log("Busqueda: " + this.input);
-      // aquí puedes agregar la lógica para hacer la búsqueda con el valor del input `query`
-    },
   },
 });
 </script>

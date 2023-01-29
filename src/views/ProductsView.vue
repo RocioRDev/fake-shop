@@ -4,7 +4,11 @@
       <el-header>
         <h1>PAGINA TO WAPA DE PRODUCTOS</h1>
         <div class="searchBar">
-          <SearchBar />
+          <!-- Barra de busqueda que devuelve lo que se ha escrito en ella -->
+          <SearchBar
+            :products="products"
+            @clickedButton="alertaClick($event)"
+          />
         </div>
       </el-header>
       <el-main>
@@ -31,13 +35,6 @@ import { Product } from "@/interfaces/producto";
 import { defineComponent, ref } from "vue";
 import axios from "axios";
 
-const products = ref<Product[]>([]);
-
-const getProducts = async () => {
-  const response = await axios.get("https://api.escuelajs.co/api/v1/products");
-  products.value = response.data;
-};
-
 export default defineComponent({
   name: "ProductsView",
   components: {
@@ -45,9 +42,36 @@ export default defineComponent({
     ProductoCard,
   },
   setup() {
+    const products = ref<Product[]>([]);
+
+    const updateProducts = (newProducts: Product[]) => {
+      console.log("updateProducts: " + newProducts);
+      products.value = newProducts;
+    };
+
+    const getProducts = async () => {
+      const response = await axios.get(
+        "https://api.escuelajs.co/api/v1/products"
+      );
+      products.value = response.data;
+    };
+
+    const getProductsFilter = async (filter: string) => {
+      if (filter.length < 3) {
+        getProducts;
+      } else {
+        const response = await axios.get(
+          "https://api.escuelajs.co/api/v1/products?title=" + filter
+        );
+        products.value = response.data;
+      }
+    };
+
     getProducts();
     return {
       products,
+      alertaClick: (test: string) => getProductsFilter(test),
+      updateProducts,
     };
   },
 });
