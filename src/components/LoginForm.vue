@@ -16,7 +16,12 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" round @click="onSubmit">Acceder</el-button>
+        <el-button
+          type="primary"
+          round
+          @click="$emit('onSubmit', 'onSubmit'), onSubmit()"
+          >Acceder</el-button
+        >
       </el-form-item>
     </el-form>
   </div>
@@ -34,24 +39,6 @@ const emailRules = [required, email];
 // Validar la contraseña
 const passwordRules = [required, minLength(8)];
 
-// Si la contraseña es menor a 8 caracteres mostrar un error
-const passwordError = computed(() => {
-  if (passwordRules[1](formInline.password)) {
-    return "";
-  } else {
-    return "Password must be at least 8 characters";
-  }
-});
-
-// Si el email es invalido mostrar un error
-const emailError = computed(() => {
-  if (emailRules[1](formInline.email)) {
-    return "";
-  } else {
-    return "Email is invalid";
-  }
-});
-
 // Probar que el email y la contraseña son validos
 const isValid = computed(() => {
   return (
@@ -67,6 +54,11 @@ const formInline = reactive({
 
 // onSubmit usar axios para hacer el login
 const onSubmit = () => {
+  // validar el emial y la contraseña
+  if (!isValid.value) {
+    alert("Email o contraseña invalidos");
+    return;
+  }
   console.log("submit!");
   axios
     .post("https://api.escuelajs.co/api/v1/auth/login", {
@@ -81,9 +73,11 @@ const onSubmit = () => {
       //   const store = useStore();
       //   store.commit("setToken", response.data.access_token);
       // Redireccionar a la pagina de productos
+      window.location.reload();
       router.push("/products");
     })
     .catch((error) => {
+      alert("Usuario o contraseña incorrectos");
       console.log(error);
     });
 };
